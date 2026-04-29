@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from langchain_core.messages import HumanMessage
 from src.graph.builder import build_graph
 from src.observability.tracker import log_trace
 import uuid
@@ -17,7 +18,7 @@ async def chat(req: ChatReq):
     cfg = {"configurable": {"thread_id": tid}}
     try:
         res = graph.invoke(
-            {"messages": [{"role": "user", "content": req.user_input}], "adaptation_log": []},
+            {"messages": [HumanMessage(content=req.user_input)], "adaptation_log": []},
             config=cfg
         )
         ans = res["messages"][-1].content if res["messages"] else "Нет ответа"
