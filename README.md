@@ -6,7 +6,7 @@ uv run pytest tests/ -v
 
 ollama pull qwen2.5:7b nomic-embed-text
 
-# 2. Локальный прогон с mock-заглушкой (если Ollama ещё не скачал модель)
+# Локальный прогон с mock-заглушкой (если Ollama ещё не скачал модель)
 uv run python -c "
 from src.graph.builder import build_graph
 from unittest.mock import patch, MagicMock
@@ -26,9 +26,17 @@ with patch('src.graph.nodes.get_llm', return_value=fake_llm):
     print('✅ Graph OK | State keys:', list(res.keys()))
 "
 
-uv run uvicorn src.server.app:app --port 8000 &
+# запуск сервера
+uv run uvicorn src.server.app:app --port 8000
 
-
-curl -X POST http://localhost:8000/chat \
+# тест запроса с красивым ответом
+curl -s -X POST http://127.0.0.1:8000/chat \
   -H "Content-Type: application/json" \
-  -d '{"user_input": "Какой баланс у счёта ACC-123?"}'
+  -d '{"user_input": "Рассчитай платёж по кредиту 500000 на 24 месяца"}' | \
+  python3 -c "
+import sys, json
+d = json.load(sys.stdin)
+print(f'💬 Ответ: {d[\"response\"]}')
+print(f'⚡ Задержка: {d[\"metrics\"][\"latency\"]}s')
+print(f'🪙 Токены: {d[\"metrics\"][\"prompt_tokens\"]}→{d[\"metrics\"][\"output_tokens\"]}')
+"
