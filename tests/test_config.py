@@ -1,9 +1,9 @@
 import pytest
-from src.config import load_config, AppConfig, OllamaConfig, GigaChatConfig
+from src.config import load_config
 
 
-def test_defaults_when_no_file():
-    config = load_config("nonexistent_config.toml")
+def test_defaults_when_no_file(tmp_path):
+    config = load_config(str(tmp_path / "nonexistent_config.toml"))
     assert config.llm.provider == "ollama"
     assert config.llm.ollama.model == "qwen2.5:7b"
     assert config.llm.ollama.temperature == 0

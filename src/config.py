@@ -5,7 +5,7 @@ import pathlib
 
 class OllamaConfig(BaseModel):
     model: str = "qwen2.5:7b"
-    temperature: float = 0
+    temperature: float = 0.0
     num_predict: int = 512
 
 
