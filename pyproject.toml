@@ -13,10 +13,8 @@ dependencies = [
     "pydantic>=2.9.0",
     "tenacity>=9.0.0",
     "rich>=13.0.0",
+    "langchain-gigachat>=0.3.0",
 ]
-
-[project.optional-dependencies]
-gigachat = ["langchain-gigachat>=0.3.0"]
 
 [dependency-groups]
 dev = [
