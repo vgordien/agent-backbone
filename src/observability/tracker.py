@@ -9,6 +9,6 @@ def log_trace(metrics: dict, messages: list):
     console.print(f"\n📊 TRACE | Tokens: {total} | Latency: {metrics.get('latency', 0)}s")
     for m in messages:
         role = getattr(m, "role", "system")
-        content = str(m.content)[:120]
+        content = str(m.content if hasattr(m, "content") else m.get("content", ""))[:120]
         tools = [t["name"] for t in getattr(m, "tool_calls", [])]
         console.print(f"  ↳ {role}: {content} {'| tools:'+','.join(tools) if tools else ''}")

@@ -10,8 +10,9 @@ _retriever = None
 def get_llm():
     global _llm
     if _llm is None:
-        from langchain_ollama import ChatOllama
-        _llm = ChatOllama(model="qwen2.5:7b", temperature=0, num_predict=512).bind_tools(tools)
+        from src.config import load_config
+        from src.llm_factory import create_llm
+        _llm = create_llm(load_config())
     return _llm
 
 def get_retriever():

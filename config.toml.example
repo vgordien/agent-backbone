@@ -1,0 +1,13 @@
+[llm]
+provider = "ollama"   # "ollama" or "gigachat"
+
+[llm.ollama]
+model = "qwen2.5:7b"
+temperature = 0
+num_predict = 512
+
+[llm.gigachat]
+credentials = "YOUR_BASE64_CREDENTIALS_HERE"   # base64-encoded API key from developers.sber.ru/gigachat
+scope = "GIGACHAT_API_PERS"   # or "GIGACHAT_API_CORP"
+model = "GigaChat"   # other options: "GigaChat-Pro", "GigaChat-Max"
+verify_ssl_certs = true   # set to false only for self-signed/dev environments

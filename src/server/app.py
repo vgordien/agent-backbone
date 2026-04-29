@@ -21,10 +21,7 @@ async def chat(req: ChatReq):
     try:
         # ⬇️ Конвертируем строку в HumanMessage — это ключевая фиксация
         res = graph.invoke(
-            {
-                "messages": [HumanMessage(content=req.user_input)],
-                "adaptation_log": []
-            },
+            {"messages": [HumanMessage(content=req.user_input)], "adaptation_log": []},
             config=cfg
         )
         
