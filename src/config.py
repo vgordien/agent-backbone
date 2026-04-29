@@ -1,4 +1,5 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from typing import Literal
 import tomllib
 import pathlib
 
@@ -10,14 +11,14 @@ class OllamaConfig(BaseModel):
 
 
 class GigaChatConfig(BaseModel):
-    credentials: str
+    credentials: str = Field(..., repr=False)
     scope: str = "GIGACHAT_API_PERS"
     model: str = "GigaChat"
-    verify_ssl_certs: bool = False
+    verify_ssl_certs: bool = True
 
 
 class LLMConfig(BaseModel):
-    provider: str = "ollama"
+    provider: Literal["ollama", "gigachat"] = "ollama"
     ollama: OllamaConfig = OllamaConfig()
     gigachat: GigaChatConfig | None = None
 

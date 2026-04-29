@@ -63,6 +63,6 @@ def test_create_llm_gigachat_missing_section():
 
 def test_create_llm_unknown_provider():
     from src.llm_factory import create_llm
-    config = AppConfig(llm=LLMConfig(provider="unknown"))
-    with pytest.raises(ValueError, match="Неизвестный провайдер: unknown"):
-        create_llm(config)
+    import pydantic
+    with pytest.raises(pydantic.ValidationError):
+        config = AppConfig(llm=LLMConfig(provider="unknown"))

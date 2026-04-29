@@ -61,4 +61,4 @@ credentials = "test_creds"
     config = load_config(str(toml_file))
     assert config.llm.gigachat.scope == "GIGACHAT_API_PERS"
     assert config.llm.gigachat.model == "GigaChat"
-    assert config.llm.gigachat.verify_ssl_certs is False
+    assert config.llm.gigachat.verify_ssl_certs is True
